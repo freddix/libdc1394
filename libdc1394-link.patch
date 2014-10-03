@@ -1,0 +1,13 @@
+diff -aurN libdc1394-2.2.1.orig/dc1394/Makefile.am libdc1394-2.2.1/dc1394/Makefile.am
+--- libdc1394-2.2.1.orig/dc1394/Makefile.am	2014-10-03 21:31:41.000000000 +0200
++++ libdc1394-2.2.1/dc1394/Makefile.am	2014-10-03 21:32:36.000000000 +0200
+@@ -52,7 +52,8 @@
+ 	$(MACOSX_LIBADD) \
+ 	$(WINDOWS_LIBADD) \
+ 	$(USB_LIBADD) \
+-	vendor/libdc1394-vendor.la
++	vendor/libdc1394-vendor.la \
++	-lpthread
+ 
+ # headers to be installed
+ pkginclude_HEADERS =  	\

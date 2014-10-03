@@ -1,19 +1,19 @@
 Summary:	Library for 1394 Digital Camera Specification
 Name:		libdc1394
-Version:	2.1.3
-Release:	2
+Version:	2.2.1
+Release:	1
 License:	GPL
 Group:		Libraries
-Source0:	http://heanet.dl.sourceforge.net/libdc1394/%{name}-%{version}.tar.gz
-# Source0-md5:	d8b2cbfae1b329fdeaa638da80427334
-Patch0:		%{name}-usb_init.patch
-Patch1:		%{name}-videodev-fix.patch
+Source0:	http://downloads.sourceforge.net/libdc1394/%{name}-%{version}.tar.gz
+# Source0-md5:	5c4b78bb8265d6dc971433ec1da381ab
+Patch0:		%{name}-link.patch
 URL:		http://sourceforge.net/projects/libdc1394/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libraw1394-devel
 BuildRequires:	libtool
-BuildRequires:	libusbx-devel
+BuildRequires:	libusb-devel
+BuildRequires:	pkg-config
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -26,14 +26,15 @@ Specification (found at http://www.1394ta.org/).
 Summary:	libdc1394 header files
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	libraw1394-devel
+Requires:	libusb-devel
 
 %description devel
 libdc1394 header files.
 
 %prep
 %setup -q
-%patch0 -p2
-%patch1 -p2
+%patch0 -p1
 
 %build
 %{__libtoolize}
@@ -50,6 +51,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -68,7 +71,6 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libdc1394.so
-%{_libdir}/libdc1394.la
 %{_includedir}/dc1394
 %{_pkgconfigdir}/*.pc
 
